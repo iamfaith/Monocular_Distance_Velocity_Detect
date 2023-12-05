@@ -111,6 +111,8 @@ def object_point_world_position(u, v, w, h, p, k):
     print('p_inv', p_inv)
 
     #point (x,y) in camera coordinate position
+    # depth is Zc
+    # https://learnopencv.com/geometry-of-image-formation/
     c_position = np.matmul(k_inv, depth * point_c)
     print('相机坐标系camera_coordinate_position', c_position)
 

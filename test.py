@@ -43,12 +43,37 @@ k_inv = np.linalg.inv(k)
 
 point_c = np.array([u1, v1, 1])
 point_c = np.transpose(point_c)
-print('point_c', point_c)
-
+#point (x,y) in camera coordinate position
 c_position = np.matmul(k_inv, depth * point_c)
 print('相机坐标系camera_coordinate_position', c_position)
-    
+
+# c = p[R|t] * w --> w = p^-1[R|t] *c
+#point (x,y) in world coordinate position
 c_position = np.append(c_position, 1)
 c_position = np.transpose(c_position) # [20 10  1  1]
 c_position = np.matmul(p_inv, c_position)
+print('世界坐标系world_coordinate_position', c_position)
 print(c_position)
+# 相机坐标系camera_coordinate_position [ 30.62056573  17.174715   -49.799395  ]
+# 世界坐标系world_coordinate_position [-49.799395    30.62056573  16.174715     1.        ]
+
+# 世界x --》 相机z
+# 世界y --》 相机x
+# 世界z --》 相机y - 1
+# [[0 1 0 0]
+#  [0 0 1 1]
+#  [1 0 0 0]
+#  [0 0 0 1]]
+
+            #       Zw
+            #     |
+            #     |
+            #     |
+            #     |________ Yw
+            #    /
+            #   /    .(obj) 
+            #  /
+            # Xw         | Yc
+            #            |___ Xc
+            #           /
+            #          / Zc
