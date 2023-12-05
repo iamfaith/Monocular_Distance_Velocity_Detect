@@ -114,6 +114,7 @@ def object_point_world_position(u, v, w, h, p, k):
     c_position = np.matmul(k_inv, depth * point_c)
     print('相机坐标系camera_coordinate_position', c_position)
 
+    # c = p[R|t] * w --> w = p^-1[R|t] *c
     #point (x,y) in world coordinate position
     c_position = np.append(c_position, 1)
     c_position = np.transpose(c_position)
